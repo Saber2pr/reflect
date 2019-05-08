@@ -13,6 +13,17 @@ export namespace Reflector {
 
   const Metadata = new WeakMap<Object, Map<string, MetadataMap>>()
 
+  function getMetadataMap(target: Object, propertyKey?: string) {
+    const targetMetadata =
+      Metadata.get(target) || Metadata.get(Object.getPrototypeOf(target))
+    if (!targetMetadata) return
+
+    const metadataMap = targetMetadata.get(propertyKey)
+    if (!metadataMap) return
+
+    return metadataMap
+  }
+
   export function defineMetadata(
     metadataKey: MetadataKey,
     metadataValue: MetadataValue,
@@ -35,14 +46,24 @@ export namespace Reflector {
     target: Object,
     propertyKey?: string
   ): T {
-    const targetMetadata =
-      Metadata.get(target) || Metadata.get(Object.getPrototypeOf(target))
-    if (!targetMetadata) return
-
-    const metadataMap = targetMetadata.get(propertyKey)
+    const metadataMap = getMetadataMap(target, propertyKey)
     if (!metadataMap) return
 
     return metadataMap.get(metadataKey)
+  }
+
+  export function getMetadataKeys(target: Object, propertyKey?: string) {
+    if (propertyKey) {
+      const metadataMap = getMetadataMap(target, propertyKey)
+      if (!metadataMap) return
+      return Array.from(metadataMap.keys())
+    }
+
+    const maps = Object.keys(Object.getPrototypeOf(target)).map(key =>
+      Array.from(getMetadataMap(target, key).keys())
+    )
+
+    return [].concat(...maps)
   }
 
   export function metadata(

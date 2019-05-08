@@ -64,7 +64,15 @@ function getMetadata<T>(
 ): T
 ```
 
-3. Reflect.metadata
+3. Reflect.getMetadataKeys
+
+> 获取所有元数据键
+
+```ts
+function getMetadataKeys(target: Object, propertyKey?: string)
+```
+
+4. Reflect.metadata
 
 > 元数据装饰器
 
