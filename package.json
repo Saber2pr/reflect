@@ -1,0 +1,28 @@
+{
+  "name": "@saber2pr/reflect",
+  "version": "0.0.2",
+  "description": "> a simple Typescript Reflector.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Saber2pr/-saber2pr-reflect.git"
+  },
+  "author": "saber2pr",
+  "license": "ISC",
+  "files": [
+    "lib/core/*",
+    "lib/index.*"
+  ],
+  "keywords": [
+    "typescript",
+    "reflect",
+    "metadata"
+  ],
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "node ./lib/test/test.js",
+    "start": "tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "^3.4.3"
+  }
+}
