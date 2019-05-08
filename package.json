@@ -19,10 +19,15 @@
   ],
   "main": "./lib/index.js",
   "scripts": {
-    "test": "node ./lib/test/test.js",
+    "test": "jest src/test/*",
     "start": "tsc --watch"
   },
   "devDependencies": {
     "typescript": "^3.4.3"
+  },
+  "dependencies": {
+    "@types/jest": "^24.0.12",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2"
   }
 }

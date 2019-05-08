@@ -9,7 +9,8 @@
     "emitDecoratorMetadata": true,
     "lib": [
      "dom",
-     "es2015"
+     "es2015",
+     "esnext"
     ]
   },
   "include": ["src"],
