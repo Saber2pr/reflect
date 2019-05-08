@@ -18,6 +18,7 @@ class Test {
 console.log(Reflect.getMetadata('inClass', Test))
 console.log(Reflect.getMetadata('design:paramtypes', Test))
 console.log(Reflect.getMetadata('inMethod', new Test(), 'hello'))
+// console.log(Reflect.(new Test()))
 console.log(Reflect.getMetadataKeys(new Test()))
 /**
  * [ 'design:returntype',

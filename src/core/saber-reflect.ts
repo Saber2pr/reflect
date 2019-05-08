@@ -13,9 +13,22 @@ export namespace Reflector {
 
   const Metadata = new WeakMap<Object, Map<string, MetadataMap>>()
 
+  function getOwnMetadataMap(target: Object, propertyKey?: string) {
+    const targetMetadata = Metadata.get(target)
+    if (!targetMetadata) return
+
+    const metadataMap = targetMetadata.get(propertyKey)
+    if (!metadataMap) return
+
+    return metadataMap
+  }
+
   function getMetadataMap(target: Object, propertyKey?: string) {
-    const targetMetadata =
-      Metadata.get(target) || Metadata.get(Object.getPrototypeOf(target))
+    if (Boolean(getOwnMetadataMap(target, propertyKey))) {
+      return getOwnMetadataMap(target, propertyKey)
+    }
+
+    const targetMetadata = Metadata.get(Object.getPrototypeOf(target))
     if (!targetMetadata) return
 
     const metadataMap = targetMetadata.get(propertyKey)
@@ -52,6 +65,17 @@ export namespace Reflector {
     return metadataMap.get(metadataKey)
   }
 
+  export function getOwnMetadata<T>(
+    metadataKey: MetadataKey,
+    target: Object,
+    propertyKey?: string
+  ): T {
+    const metadataMap = getOwnMetadataMap(target, propertyKey)
+    if (!metadataMap) return
+
+    return metadataMap.get(metadataKey)
+  }
+
   export function getMetadataKeys(target: Object, propertyKey?: string) {
     if (propertyKey) {
       const metadataMap = getMetadataMap(target, propertyKey)
@@ -66,12 +90,53 @@ export namespace Reflector {
     return [].concat(...maps)
   }
 
+  export function getOwnMetadataKeys(target: Object, propertyKey?: string) {
+    if (propertyKey) {
+      const metadataMap = getOwnMetadataMap(target, propertyKey)
+      if (!metadataMap) return
+      return Array.from(metadataMap.keys())
+    }
+
+    const maps = Object.keys(Object.getPrototypeOf(target)).map(key =>
+      Array.from(getOwnMetadataMap(target, key).keys())
+    )
+
+    return [].concat(...maps)
+  }
+
   export function metadata(
     metadataKey: MetadataKey,
     metadataValue: MetadataValue
   ) {
     return (target: Object, propertyKey?: string) =>
       defineMetadata(metadataKey, metadataValue, target, propertyKey)
+  }
+
+  export function hasMetadata(
+    metadataKey: MetadataKey,
+    target: Object,
+    propertyKey?: string
+  ) {
+    return Boolean(getMetadata(metadataKey, target, propertyKey))
+  }
+
+  export function hasOwnMetadata(
+    metadataKey: MetadataKey,
+    target: Object,
+    propertyKey?: string
+  ) {
+    return Boolean(getOwnMetadata(metadataKey, target, propertyKey))
+  }
+
+  export function deleteMetadata(
+    metadataKey: MetadataKey,
+    target: Object,
+    propertyKey?: string
+  ) {
+    const metadataMap = getMetadataMap(target, propertyKey)
+    if (!metadataMap) return
+
+    return metadataMap.delete(metadataKey)
   }
 }
 
