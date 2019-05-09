@@ -2,7 +2,7 @@
  * @Author: saber2pr
  * @Date: 2019-05-08 14:52:48
  * @Last Modified by: saber2pr
- * @Last Modified time: 2019-05-08 23:21:08
+ * @Last Modified time: 2019-05-09 10:06:15
  */
 import { IReflect, reflect } from './shim/reflect'
 
@@ -14,7 +14,14 @@ export namespace Reflector {
 
   const Metadata = new WeakMap<Object, Map<PropertyKey, MetadataMap>>()
 
-  function getOwnMetadataMap(target: Object, propertyKey?: PropertyKey) {
+  function getOwnMetadataMap(
+    target: Object,
+    propertyKey: PropertyKey = 'default'
+  ) {
+    if (target === undefined) {
+      throw new TypeError()
+    }
+
     const targetMetadata = Metadata.get(target)
     if (!targetMetadata) return
 
@@ -24,7 +31,10 @@ export namespace Reflector {
     return metadataMap
   }
 
-  function getMetadataMap(target: Object, propertyKey?: PropertyKey) {
+  function getMetadataMap(
+    target: Object,
+    propertyKey: PropertyKey = 'default'
+  ) {
     if (Boolean(getOwnMetadataMap(target, propertyKey))) {
       return getOwnMetadataMap(target, propertyKey)
     }
@@ -42,7 +52,7 @@ export namespace Reflector {
     metadataKey: MetadataKey,
     metadataValue: MetadataValue,
     target: Object,
-    propertyKey?: PropertyKey
+    propertyKey: PropertyKey = 'default'
   ) {
     if (undefined === target) {
       throw new TypeError()
@@ -79,10 +89,6 @@ export namespace Reflector {
     target: Object,
     propertyKey?: PropertyKey
   ): T {
-    if (undefined === target) {
-      throw new TypeError()
-    }
-
     const metadataMap = getOwnMetadataMap(target, propertyKey)
     if (!metadataMap) return
 
@@ -90,37 +96,28 @@ export namespace Reflector {
   }
 
   export function getMetadataKeys(target: Object, propertyKey?: PropertyKey) {
-    if (undefined === target) {
-      throw new TypeError()
-    }
-
     const ownKeys = getOwnMetadataKeys(target, propertyKey)
-    
-    const protoKeys = Object.keys(Object.getPrototypeOf(target)).map(key =>
-      Array.from(getMetadataMap(target, key).keys())
+
+    const protoKeys = getOwnMetadataKeys(
+      Object.getPrototypeOf(target),
+      propertyKey
     )
 
-    return [].concat(...protoKeys, ...ownKeys)
+    return [].concat(...ownKeys, ...protoKeys)
   }
 
-  export function getOwnMetadataKeys(target: Object, propertyKey?: PropertyKey) {
-    if (undefined === target) {
-      throw new TypeError()
-    }
-
+  export function getOwnMetadataKeys(
+    target: Object,
+    propertyKey?: PropertyKey
+  ) {
     const ownKeys = []
 
-    if (propertyKey) {
-      const metadataMap = getOwnMetadataMap(target, propertyKey)
-      if (!metadataMap) return
-      ownKeys.push(...Array.from(metadataMap.keys()))
-    }
+    const metadataMap = getOwnMetadataMap(target, propertyKey)
+    if (!metadataMap) return ownKeys
 
-    const keys = Object.keys(target).map(key =>
-      Array.from(getOwnMetadataMap(target, key).keys())
-    )
+    ownKeys.push(...Array.from(metadataMap.keys()))
 
-    return [].concat(...keys, ...ownKeys)
+    return [].concat(...ownKeys)
   }
 
   export function metadata(
@@ -152,8 +149,8 @@ export namespace Reflector {
     target: Object,
     propertyKey?: PropertyKey
   ) {
-    const metadataMap = getMetadataMap(target, propertyKey)
-    if (!metadataMap) return
+    const metadataMap = getOwnMetadataMap(target, propertyKey)
+    if (!metadataMap) return false
 
     return metadataMap.delete(metadataKey)
   }

@@ -3,7 +3,7 @@ import { Reflect } from '..'
 describe('Reflect.deleteMetadata', () => {
   it('KeysKeysInvalidTarget', () => {
     // 1. If Type(target) is not Object, throw a TypeError exception.
-    expect(() => Reflect.getOwnMetadataKeys(undefined, undefined)).toEqual(
+    expect(() => Reflect.getOwnMetadataKeys(undefined, undefined)).toThrow(
       TypeError
     )
   })
