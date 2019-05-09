@@ -155,6 +155,23 @@ export namespace Reflector {
 
     return metadataMap.delete(metadataKey)
   }
+
+  export function decorate(
+    decorators: (PropertyDecorator | MethodDecorator)[],
+    target: Object | Function,
+    propertyKey?: string | symbol,
+    attributes?: PropertyDescriptor
+  ): PropertyDescriptor {
+    if (0 === decorators.length) {
+      throw new TypeError()
+    }
+
+    return decorators.reduceRight(
+      (target, decorator) =>
+        decorator(target, propertyKey, attributes) || target,
+      <any>target
+    )
+  }
 }
 
 export const Reflect: typeof Reflector & IReflect = Object.assign(
