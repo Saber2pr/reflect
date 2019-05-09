@@ -1,6 +1,6 @@
 # @saber2pr/reflect
 
-> a simple Typescript Reflector.
+> Typescript Reflector.
 
 > `PASS: 已通过所有官方测试用例`
 
