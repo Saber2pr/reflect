@@ -1,8 +1,8 @@
 /*
  * @Author: saber2pr 
  * @Date: 2019-05-09 10:29:02 
- * @Last Modified by:   saber2pr 
- * @Last Modified time: 2019-05-09 10:29:02 
+ * @Last Modified by: saber2pr
+ * @Last Modified time: 2019-05-09 13:02:32
  */
 import { Reflect } from '..'
 
@@ -18,3 +18,4 @@ class Test {
 console.log(Reflect.getMetadata('inClass', Test)) // 'A'
 console.log(Reflect.getMetadata('design:paramtypes', Test)) // [ [Function: Test] ]
 console.log(Reflect.getMetadata('inMethod', new Test(), 'hello')) // 'B'
+console.log(Reflect.get)

@@ -1,6 +1,6 @@
 {
   "name": "@saber2pr/reflect",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "> a simple Typescript Reflector.",
   "repository": {
     "type": "git",
