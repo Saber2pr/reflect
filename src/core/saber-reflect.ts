@@ -2,7 +2,7 @@
  * @Author: saber2pr
  * @Date: 2019-05-08 14:52:48
  * @Last Modified by: saber2pr
- * @Last Modified time: 2019-05-09 10:06:15
+ * @Last Modified time: 2019-05-09 10:25:44
  */
 import { IReflect, reflect } from './shim/reflect'
 
@@ -11,14 +11,15 @@ export namespace Reflector {
   type MetadataValue = any
   type MetadataMap = Map<MetadataKey, MetadataValue>
   type PropertyKey = string | symbol
+  const DEFAULTKAY = 'reflect:default'
 
   const Metadata = new WeakMap<Object, Map<PropertyKey, MetadataMap>>()
 
   function getOwnMetadataMap(
     target: Object,
-    propertyKey: PropertyKey = 'default'
+    propertyKey: PropertyKey = DEFAULTKAY
   ) {
-    if (target === undefined) {
+    if (typeof target !== 'object' && typeof target !== 'function') {
       throw new TypeError()
     }
 
@@ -33,7 +34,7 @@ export namespace Reflector {
 
   function getMetadataMap(
     target: Object,
-    propertyKey: PropertyKey = 'default'
+    propertyKey: PropertyKey = DEFAULTKAY
   ) {
     if (Boolean(getOwnMetadataMap(target, propertyKey))) {
       return getOwnMetadataMap(target, propertyKey)
@@ -52,9 +53,9 @@ export namespace Reflector {
     metadataKey: MetadataKey,
     metadataValue: MetadataValue,
     target: Object,
-    propertyKey: PropertyKey = 'default'
+    propertyKey: PropertyKey = DEFAULTKAY
   ) {
-    if (undefined === target) {
+    if (typeof target !== 'object' && typeof target !== 'function') {
       throw new TypeError()
     }
 

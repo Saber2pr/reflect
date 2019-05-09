@@ -2,6 +2,8 @@
 
 > a simple Typescript Reflector.
 
+> `PASS: 已通过所有官方测试用例`
+
 ```bash
 # from npm
 npm install @saber2pr/reflect

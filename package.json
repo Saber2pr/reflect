@@ -1,6 +1,6 @@
 {
   "name": "@saber2pr/reflect",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "> a simple Typescript Reflector.",
   "repository": {
     "type": "git",
@@ -19,8 +19,9 @@
   ],
   "main": "./lib/index.js",
   "scripts": {
-    "test": "jest src/test/*",
-    "start": "tsc --watch"
+    "test": "jest src/test/*.test.ts",
+    "start": "tsc --watch",
+    "exam": "node lib/test/example"
   },
   "devDependencies": {
     "typescript": "^3.4.3"
