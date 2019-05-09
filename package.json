@@ -1,6 +1,6 @@
 {
   "name": "@saber2pr/reflect",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "> a simple Typescript Reflector.",
   "repository": {
     "type": "git",
@@ -24,11 +24,9 @@
     "exam": "node lib/test/example"
   },
   "devDependencies": {
-    "typescript": "^3.4.3"
-  },
-  "dependencies": {
     "@types/jest": "^24.0.12",
     "jest": "^24.8.0",
-    "ts-jest": "^24.0.2"
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.3"
   }
 }
