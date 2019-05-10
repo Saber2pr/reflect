@@ -18,5 +18,5 @@ export function getMetadataKeys(
     propertyKey
   )
 
-  return [].concat(...ownKeys, ...protoKeys)
+  return [...ownKeys, ...protoKeys]
 }

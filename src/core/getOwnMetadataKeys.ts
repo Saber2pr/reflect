@@ -11,12 +11,8 @@ export function getOwnMetadataKeys(
   target: Object,
   propertyKey?: PropertyKey
 ): MetadataKey[] {
-  const ownKeys = []
-
   const metadataMap = getOwnMetadataMap(target, propertyKey)
-  if (!metadataMap) return ownKeys
+  if (!metadataMap) return []
 
-  ownKeys.push(...Array.from(metadataMap.keys()))
-
-  return [].concat(...ownKeys)
+  return Array.from(metadataMap.keys())
 }
