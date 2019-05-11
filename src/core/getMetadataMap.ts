@@ -12,9 +12,8 @@ export function getMetadataMap(
   target: Object,
   propertyKey: PropertyKey = DEFAULTKAY
 ) {
-  if (Boolean(getOwnMetadataMap(target, propertyKey))) {
-    return getOwnMetadataMap(target, propertyKey)
-  }
+  const ownMetadataMap = getOwnMetadataMap(target, propertyKey)
+  if (ownMetadataMap) return ownMetadataMap
 
   const targetMetadata = Metadata.get(Object.getPrototypeOf(target))
   if (!targetMetadata) return
