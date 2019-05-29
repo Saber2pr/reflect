@@ -4,7 +4,7 @@
   "description": "> Typescript Reflector.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Saber2pr/-saber2pr-reflect.git"
+    "url": "git+https://github.com/Saber2pr/reflect.git"
   },
   "author": "saber2pr",
   "license": "ISC",

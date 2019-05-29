@@ -9,7 +9,7 @@
 npm install @saber2pr/reflect
 
 # from github
-git clone https://github.com/Saber2pr/-saber2pr-reflect.git
+git clone https://github.com/Saber2pr/reflect.git
 ```
 
 ---
